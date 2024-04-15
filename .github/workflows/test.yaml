@@ -35,7 +35,7 @@ jobs:
 
       - name: Sync all streams
         env:
-          TAP_OVERWRITES_STATE__SELECT: '[*.*]'
+          TAP_OVERWRITES_STATE__SELECT: '["*.*"]'
         run: |
           meltano run tap-overwrites-state target-jsonl
       - name: Inspect state
