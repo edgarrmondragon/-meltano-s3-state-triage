@@ -10,7 +10,7 @@ on:
 
 jobs:
   meltano-run:
-    name: "Meltano run with that ${{ matrix.overwrite_state && 'overwrites state' || 'does not overwrite state' }}"
+    name: "Meltano run with that ${{ matrix.overwrite_state == 'true' && 'overwrites state' || 'does not overwrite state' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
