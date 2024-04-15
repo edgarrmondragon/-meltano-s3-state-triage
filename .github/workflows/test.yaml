@@ -12,6 +12,8 @@ jobs:
   meltano-run:
     name: "Meltano run with that ${{ matrix.overwrite_state == 'true' && 'overwrites state' || 'does not overwrite state' }}"
     runs-on: ubuntu-latest
+    env:
+      TAP_OVERWRITES_STATE_OVERWRITE_STATE: ${{ matrix.overwrite_state }}
     strategy:
       matrix:
         overwrite_state: ["true", "false"]
