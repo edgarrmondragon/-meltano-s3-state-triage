@@ -1,0 +1,43 @@
+version: 1
+default_environment: dev
+project_id: d94a3129-a564-4c03-9f75-89b5d4991671
+environments:
+- name: dev
+- name: staging
+- name: prod
+send_anonymous_usage_stats: false
+state_backend:
+  uri: s3://meltano-state
+  s3:
+    aws_access_key_id: minio
+    aws_secret_access_key: minio-secret
+    endpoint_url: http://localhost:9000
+plugins:
+  extractors:
+  - name: tap-overwrites-state
+    namespace: overwrites
+    variant: custom
+    executable: ./overwrite.py
+    capabilities:
+    - discover
+    - state
+    - catalog
+    settings:
+    - name: ts
+      kind: date_iso8601
+      description: Dummy timestamp
+    - name: overwrite_state
+      kind: boolean
+      description: Whether to overwrite state
+      value: true
+    - name: streams
+      kind: array
+      description: List of streams to extract
+    select: ["*.*"]
+    config:
+      streams: [stream_1, stream_2, stream_3]
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  

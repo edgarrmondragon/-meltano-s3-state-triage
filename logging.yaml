@@ -1,0 +1,31 @@
+version: 1
+disable_existing_loggers: no
+
+formatters:
+  structured_colored:
+    (): meltano.core.logging.console_log_formatter
+    colors: True
+    show_locals: True
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: structured_colored
+    stream: "ext://sys.stderr"
+root:
+  level: DEBUG
+  handlers: [console]
+loggers:
+  urllib3:
+    level: INFO
+    propagate: yes
+  botocore:
+    level: WARNING
+    propagate: yes
+  smart_open:
+    level: WARNING
+    propagate: yes
+  # Disable logging of tap and target stdout
+  meltano.core.block.extract_load:
+    level: INFO
+    propagate: no
